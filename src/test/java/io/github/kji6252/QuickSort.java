@@ -19,30 +19,35 @@ public class QuickSort {
     }
 
     private void quickSort(int[] ints, int left, int right) {
-        if (left >= right) return;
-
-        int pivot = partition(ints, left, right);
-
-        quickSort(ints, left, pivot - 1);
-        quickSort(ints, pivot + 1, right);
+        int index = partition(ints, left, right);
+        if (left < index - 1) {
+            quickSort(ints, left, index - 1);
+        }
+        if (index < right) {
+            quickSort(ints, index, right);
+        }
     }
 
     private int partition(int[] ints, int left, int right) {
-        int middle = ints[(left + right -1) / 2];
+        int pivot = ints[(left + right) / 2];
 
         while (left <= right) {
-            while (ints[left] < middle) left++;
-            while (right > 0 && ints[right] >= middle) right--;
+            while (ints[left] < pivot) left++;
+            while (ints[right] > pivot) right--;
 
             if (left <= right) {
-                int temp = ints[left];
-                ints[left] = ints[right];
-                ints[right] = temp;
+                swap(ints, left, right);
                 left++;
                 right--;
             }
         }
 
         return left;
+    }
+
+    private void swap(int[] ints, int left, int right) {
+        int temp = ints[left];
+        ints[left] = ints[right];
+        ints[right] = temp;
     }
 }
